@@ -15,8 +15,8 @@ botaoIniciarCamera.addEventListener("click", async function () {
         audio:false
     })
 
-    botaoIniciarCamera.computedStyleMap.display= "none"
-    campoCamera.computedStyleMap.display = "block"
+    botaoIniciarCamera.style.display= "none"
+    campoCamera.style.display = "block"
 
     video.srcObject = iniciarVideo
 })
@@ -24,10 +24,21 @@ botaoIniciarCamera.addEventListener("click", async function () {
 
 
 botaoTirarFoto.addEventListener("click", function(){
-    canvas.getContext('2d').drawImage(video, 0, 0, canvas.clientWidth, canvas.clientHeight)
+    canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height)
 
     imageURL = canvas.toDataURL ("image/jpeg")
 
-    campoCamera.computedStyleMap.display = "none"
-    mensagem.computedStyleMap.display = "block"
+    campoCamera.style.display = "none"
+    mensagem.style.display = "block"
+})
+
+botaoEnviarFoto.addEventListener("click", () => {
+    const receberDadosExistentes = localStorage.getItem("cadastro")
+    const converteRetorno = JSON.parse(receberDadosExistentes)
+
+    converteRetorno.imagem = imageURL 
+
+    localStorage.setItem('cadastro', JSON.stringify(converteRetorno))
+
+    window.location.href = "./abrir-conta-form-3.html"
 })
